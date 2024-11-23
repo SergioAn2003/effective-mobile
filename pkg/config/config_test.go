@@ -18,6 +18,7 @@ func TestNew(t *testing.T) {
 	t.Setenv("LOGGER_FORMAT", "json")
 	t.Setenv("POSTGRES_DSN", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
 	t.Setenv("POSTGRES_MAX_CONNS", "5")
+	t.Setenv("SONG_SERVICE_BASE_URL", "http://localhost:8080")
 
 	expectedConfig := config.Config{
 		HTTP: config.HTTP{
@@ -32,6 +33,9 @@ func TestNew(t *testing.T) {
 		Postgres: config.Postgres{
 			DSN:      "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable",
 			MaxConns: 5,
+		},
+		ExternalSongService: config.ExternalSongService{
+			BaseURL: "http://localhost:8080",
 		},
 	}
 

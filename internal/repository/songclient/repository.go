@@ -7,7 +7,6 @@ import (
 	"net/http"
 
 	"github.com/SergioAn2003/effective-mobile/internal/entity"
-	"github.com/go-faker/faker/v4"
 )
 
 type Client struct {
@@ -25,15 +24,6 @@ func New(baseURL string) *Client {
 }
 
 func (c *Client) GetSongDetails(ctx context.Context, songName, groupName string) (entity.SongDetails, error) {
-	var songDetailes entity.SongDetails
-
-	err := faker.FakeData(&songDetailes)
-	if err != nil {
-		return entity.SongDetails{}, fmt.Errorf("songClient: failed to generate fake data: %w", err)
-	}
-
-	return songDetailes, nil
-
 	url := fmt.Sprintf("%s/info?group=%s&song=%s", c.baseURL, groupName, songName)
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
