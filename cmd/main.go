@@ -32,7 +32,7 @@ func main() {
 	pool, err := pg.Connect(ctx, cfg.Postgres.DSN, cfg.Postgres.MaxConns)
 	panicOnErr("failed to connect to database", err)
 
-	err = pg.UpMigrations(ctx, pool)
+	err = pg.UpMigrations(pool)
 	panicOnErr("failed to run migrations", err)
 
 	postgresRepo := postgres.New(pool)
@@ -44,6 +44,7 @@ func main() {
 	wg := &sync.WaitGroup{}
 
 	wg.Add(1)
+
 	go func() {
 		defer wg.Done()
 

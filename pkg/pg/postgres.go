@@ -31,7 +31,7 @@ func Connect(ctx context.Context, dsn string, maxConns int32) (*pgxpool.Pool, er
 	return pool, nil
 }
 
-func UpMigrations(ctx context.Context, pool *pgxpool.Pool) error {
+func UpMigrations(pool *pgxpool.Pool) error {
 	db := stdlib.OpenDBFromPool(pool)
 
 	fs := migrations.FS

@@ -5,7 +5,6 @@ go 1.23.2
 require (
 	github.com/caarlos0/env/v11 v11.2.2
 	github.com/go-chi/chi/v5 v5.1.0
-	github.com/go-faker/faker/v4 v4.5.0
 	github.com/gofrs/uuid/v5 v5.3.0
 	github.com/jackc/pgx/v5 v5.7.1
 	github.com/joho/godotenv v1.5.1

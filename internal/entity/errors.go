@@ -2,8 +2,6 @@ package entity
 
 import "errors"
 
-
-// errors
 var (
 	ErrNotFound      = errors.New("not found")
 	ErrAlreadyExists = errors.New("already exists")

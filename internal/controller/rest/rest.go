@@ -2,14 +2,12 @@ package rest
 
 import (
 	"context"
-	"fmt"
 	"log/slog"
 	"net/http"
 
 	"github.com/SergioAn2003/effective-mobile/internal/controller/rest/handler"
-	"github.com/SergioAn2003/effective-mobile/internal/controller/rest/middlewares"
+	"github.com/SergioAn2003/effective-mobile/internal/controller/rest/router"
 	"github.com/SergioAn2003/effective-mobile/pkg/config"
-	"github.com/go-chi/chi/v5"
 )
 
 type Controller struct {
@@ -19,24 +17,14 @@ type Controller struct {
 }
 
 func New(cfg config.Config, log *slog.Logger, service handler.Service) *Controller {
-	router := chi.NewRouter()
-
-	mw := middlewares.New(cfg, log)
-	handler := handler.New(log, service)
-
-	router.Use(mw.Log, mw.Recover, mw.Cors)
-
-	router.Get("/ping", handler.Ping)
-	router.Post("/songs", handler.CreateSong)
+	router := router.New(cfg, log, service)
 
 	server := &http.Server{
-		Addr:         fmt.Sprintf(":%s", cfg.HTTP.HTTPPort),
+		Addr:         ":" + cfg.HTTP.HTTPPort,
 		Handler:      router,
 		ReadTimeout:  cfg.HTTP.ReadTimeout,
 		WriteTimeout: cfg.HTTP.WriteTimeout,
 	}
-
-	fmt.Println(server.Addr)
 
 	return &Controller{
 		cfg:    cfg,
