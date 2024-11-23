@@ -5,9 +5,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/SergioAn2003/effective-mobile/internal/entity"
 )
+
+const timeout = time.Second * 10
 
 type Client struct {
 	client  *http.Client
@@ -17,7 +20,7 @@ type Client struct {
 func New(baseURL string) *Client {
 	return &Client{
 		client: &http.Client{
-			Timeout: 10,
+			Timeout: timeout,
 		},
 		baseURL: baseURL,
 	}

@@ -8,4 +8,5 @@ import (
 
 type Service interface {
 	CreateSong(ctx context.Context, songName, groupName string) (uuid.UUID, error)
+	DeleteSong(ctx context.Context, songID uuid.UUID) error
 }

@@ -19,6 +19,6 @@ migrate-drop:
 	@goose -dir postgres $(pg_dsn) ./migrations reset
 
 lint:
-	@golangci-lint run ./...
+	@golangci-lint run -v -c=./.golangci.yml
 		
 
