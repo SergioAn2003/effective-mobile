@@ -1,0 +1,43 @@
+services:
+  app:
+    container_name: "effective-mobile-app"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      TZ: UTC
+    env_file:
+      - path: .env
+        required: false
+    depends_on:
+      pg:
+        condition: service_healthy
+    networks:
+      - effective-mobile
+    ports:
+      - "8000:8000"
+  pg:
+    container_name: "effective-mobile-pg"
+    image: postgres:17.1-alpine3.20
+    environment:
+      TZ: UTC
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: songs-password
+    volumes:
+      - pgdata:/var/lib/postgresql/effective-mobile
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - effective-mobile
+    ports:
+      - "5431:5432"
+
+volumes:
+  pgdata:
+
+networks:
+  effective-mobile:
+    driver: bridge
